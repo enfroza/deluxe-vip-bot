@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>DELUXE VIP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== BUYER VIEW ===================== -->
+  <main id="view-buyer" class="view">
+
+    <header class="hero">
+      <div class="crest">
+        <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+          <defs>
+            <linearGradient id="crestGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FF007A"/>
+              <stop offset="100%" stop-color="#00F0FF"/>
+            </linearGradient>
+          </defs>
+          <polygon points="32,3 59,18 59,46 32,61 5,46 5,18" fill="none" stroke="url(#crestGrad)" stroke-width="2.5"/>
+          <text x="32" y="40" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="22" fill="url(#crestGrad)">DV</text>
+        </svg>
+      </div>
+      <p class="eyebrow-free" id="channel-name">DELUXE VIP</p>
+      <h1>Sri Lanka's most exclusive circle</h1>
+      <p class="hero-sub">One payment. Lifetime entry. No re-subscribing, no middlemen — just a single-use link straight from Telegram.</p>
+    </header>
+
+    <section class="price-card" id="price-card">
+      <div class="price-card__glow"></div>
+      <div class="price-row">
+        <span class="price-amount" id="price-amount">— ⭐</span>
+        <span class="price-caption">one-time · Telegram Stars</span>
+      </div>
+      <ul class="perks">
+        <li><span class="dot"></span>Instant, single-use invite link</li>
+        <li><span class="dot dot--cyan"></span>Delivered the moment you pay</li>
+        <li><span class="dot"></span>Secured natively by Telegram</li>
+      </ul>
+      <button id="btn-pay" class="btn-primary">
+        <span id="btn-pay-label">Unlock Access</span>
+      </button>
+      <p class="fine-print">Payments are processed by Telegram using Stars (XTR). No card details are ever shared with us.</p>
+    </section>
+
+    <section id="status-panel" class="status-panel hidden">
+      <div class="spinner" id="status-spinner"></div>
+      <p id="status-text">Waiting for confirmation…</p>
+    </section>
+
+    <section id="success-panel" class="success-panel hidden">
+      <div class="success-panel__glow"></div>
+      <p class="success-tag">Payment confirmed</p>
+      <h2>You're in.</h2>
+      <p class="success-sub">Here is your personal, single-use invite. It also arrived in your chat with the bot.</p>
+      <div class="link-box">
+        <input id="invite-link-input" readonly />
+        <button id="btn-copy" class="btn-ghost">Copy</button>
+      </div>
+      <a id="btn-join" class="btn-primary btn-primary--link" href="#" target="_blank" rel="noopener">Join DELUXE VIP</a>
+    </section>
+
+    <p id="admin-entry" class="admin-entry hidden">
+      <button id="btn-open-admin" class="link-btn">Open admin panel →</button>
+    </p>
+  </main>
+
+  <!-- ===================== ADMIN VIEW ===================== -->
+  <main id="view-admin" class="view hidden">
+    <header class="admin-header">
+      <button id="btn-back" class="link-btn">← Back</button>
+      <h1>Admin Panel</h1>
+    </header>
+
+    <section class="stat-grid">
+      <div class="stat-card">
+        <p class="stat-label">Total Revenue</p>
+        <p class="stat-value" id="stat-revenue">—</p>
+        <p class="stat-unit">⭐ Stars</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Active Subscribers</p>
+        <p class="stat-value" id="stat-subs">—</p>
+        <p class="stat-unit">paid purchases</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Bot Users</p>
+        <p class="stat-value" id="stat-users">—</p>
+        <p class="stat-unit">total reached</p>
+      </div>
+    </section>
+
+    <section class="admin-card">
+      <h2>Access Pricing</h2>
+      <div class="field-row">
+        <input id="input-price" type="number" min="1" step="1" placeholder="e.g. 499" />
+        <button id="btn-save-price" class="btn-secondary">Update Price</button>
+      </div>
+      <p class="field-hint">Price is charged in Telegram Stars (XTR).</p>
+    </section>
+
+    <section class="admin-card">
+      <h2>Target Channel</h2>
+      <div class="field-col">
+        <input id="input-channel-id" type="text" placeholder="Channel ID e.g. -1001234567890" />
+        <input id="input-channel-name" type="text" placeholder="Display name e.g. DELUXE VIP" />
+        <button id="btn-save-channel" class="btn-secondary">Update Channel</button>
+      </div>
+      <p class="field-hint">The bot must be an admin of this channel with invite-link permission.</p>
+    </section>
+
+    <section class="admin-card">
+      <h2>Broadcast to Buyers</h2>
+      <div class="field-col">
+        <textarea id="input-broadcast" rows="4" placeholder="Announce something to everyone who has purchased access…"></textarea>
+        <button id="btn-send-broadcast" class="btn-secondary">Send Broadcast</button>
+      </div>
+      <p class="field-hint" id="broadcast-result"></p>
+    </section>
+
+    <section class="admin-card">
+      <h2>Recent Purchases</h2>
+      <div id="recent-list" class="recent-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
